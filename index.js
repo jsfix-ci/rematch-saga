@@ -24,7 +24,7 @@ const sagaPlugin = (sagaMiddleware = createSagaMiddleware()) => ({
             if (isGenerator(fn)) {
                 const boundFn = fn.bind(this.dispatch[model.name])
                 this.effects[`${model.name}/${effectName}`] = (...p) =>
-                    sagaMiddleware.run(boundFn, ...p).done
+                    sagaMiddleware.run(boundFn, ...p).toPromise()
                 this.dispatch[model.name][effectName] = this.createDispatcher.apply(
                     this,
                     [model.name, effectName]
